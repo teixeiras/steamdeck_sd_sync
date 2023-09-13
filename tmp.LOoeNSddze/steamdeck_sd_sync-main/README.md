@@ -1,1 +1,0 @@
-# steamdeck_sd_sync
