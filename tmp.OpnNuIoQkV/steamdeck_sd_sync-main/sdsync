@@ -1,0 +1,61 @@
+#!/bin/python
+
+import sys
+sys.path.append('/home/deck/.local/share/sdsync/vdf-3.4')
+import vdf
+from os.path import exists
+import re
+import os
+import shutil
+from datetime import datetime
+dt = datetime.now()
+ts = datetime.timestamp(dt)
+import json
+import psutil
+import time
+
+
+PROCNAME = "steam"
+files = os.listdir('/home/deck/.steam/steam/userdata/')
+while True:
+    for user in files:
+        changes = False
+        localconfig = '/home/deck/.steam/steam/userdata/'+user+'/config/localconfig.vdf'
+        with open(localconfig, mode='r') as file: 
+                localContent = file.read()
+        l = vdf.loads(localContent, mapper=vdf.VDFDict)
+        usercollections = json.loads(l["UserLocalConfigStore"]["WebStorage"]["user-collections"])
+        print(usercollections)
+        UIStoreLocalSteamUIState = json.loads(l["UserLocalConfigStore"]["WebStorage"]["UIStoreLocalSteamUIState"])
+        #shutil.copy(localconfig, '/home/deck/localconfig.vdf.'+str(user)+'.'+str(ts))
+
+        shorctut = '/home/deck/.steam/steam/userdata/'+user+'/config/shortcuts.vdf'
+        with open(shorctut, mode='rb') as file: 
+            fileContent = file.read()
+        d = vdf.binary_loads(fileContent, mapper=vdf.VDFDict)
+        for x in d['shortcuts']:
+            game =  d['shortcuts'][x]
+            appid = game["appid"] + (1 << 32)
+            print("[{}]{}".format(appid, game["AppName"]))
+            path = re.sub("\"", "", game["Exe"])
+            if (exists(path)):
+                print ("Game found")
+                if appid in usercollections["hidden"]["added"]:
+                    changes = True
+                    usercollections["hidden"]["added"].remove(appid)
+            else:
+                print ("Game not found")
+                if appid not in usercollections["hidden"]["added"]:
+                    changes = True
+                    usercollections["hidden"]["added"].append(appid)
+
+        if changes :
+            l["UserLocalConfigStore"]["WebStorage"][(0,"user-collections")] =  json.dumps(usercollections)
+            print(l["UserLocalConfigStore"]["WebStorage"]["user-collections"])
+            for proc in psutil.process_iter():
+            # check whether the process name matches
+                if proc.name() == PROCNAME:
+                    proc.kill()
+
+            vdf.dump(l, open(localconfig,'w'))
+    time.sleep(3)

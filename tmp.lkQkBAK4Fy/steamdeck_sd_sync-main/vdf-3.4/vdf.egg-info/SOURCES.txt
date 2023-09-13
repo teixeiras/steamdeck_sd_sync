@@ -1,0 +1,9 @@
+README.rst
+setup.py
+vdf/__init__.py
+vdf/vdict.py
+vdf.egg-info/PKG-INFO
+vdf.egg-info/SOURCES.txt
+vdf.egg-info/dependency_links.txt
+vdf.egg-info/top_level.txt
+vdf.egg-info/zip-safe

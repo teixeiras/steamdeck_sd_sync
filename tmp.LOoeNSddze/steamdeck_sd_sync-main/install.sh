@@ -30,6 +30,5 @@ mkdir -p /home/deck/.local/share/systemd/user/
 cp sdsync.service ~/.local/share/systemd/user/
 systemctl --user daemon-reload
 
-echo "Starting service"
 systemctl enable --now --user sdsync.service
 trap cleanup EXIT
