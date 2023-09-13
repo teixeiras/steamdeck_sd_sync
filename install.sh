@@ -1,6 +1,8 @@
 #!/bin/bash
-INSTALL_PATH="~/.local/share/sdsync"
-mkdir INSTALL_PATH
+INSTALL_PATH="/home/deck/.local/share/sdsync"
+rm -rf $INSTALL_PATH
+mkdir $INSTALL_PATH
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 WORK_DIR=`mktemp -d -p "$DIR"`
 
@@ -17,10 +19,15 @@ unzip main.zip
 
 cd steamdeck_sd_sync-main/
 # Install the script files
-cp *.py $INSTALL_PATH
+ls
+cp sdsync $INSTALL_PATH
 cp -a vdf-3.4 $INSTALL_PATH
+
+mkdir -p /home/deck/.local/share/systemd/user/
+
 # Install the service script
-cp $DIR/sdsync.service ~/.local/share/systemd/user/
+cp sdsync.service ~/.local/share/systemd/user/
+systemctl --user daemon-reload
 
 systemctl enable --now --user sdsync.service
 trap cleanup EXIT

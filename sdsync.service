@@ -1,7 +1,10 @@
 [Unit]
-Description=Mount External Drive on %i
+Description=SD steam sync
 
 [Service]
 Type=oneshot
 RemainAfterExit=true
 ExecStart=/home/deck/.local/share/sdsync/sdsync
+
+[Install]
+WantedBy=default.target
