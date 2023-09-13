@@ -8,7 +8,6 @@ WORK_DIR=`mktemp -d -p "$DIR"`
 
 function cleanup {      
   rm -rf "$WORK_DIR"
-  echo "Deleted temp working directory $WORK_DIR"
 }
 
 
