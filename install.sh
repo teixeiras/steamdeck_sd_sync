@@ -21,6 +21,7 @@ cd steamdeck_sd_sync-main/
 # Install the script files
 ls
 cp sdsync $INSTALL_PATH
+chmod u+x $INSTALL_PATH/sdsync
 cp -a vdf-3.4 $INSTALL_PATH
 
 mkdir -p /home/deck/.local/share/systemd/user/
