@@ -1,3 +1,5 @@
+#!/bin/python
+
 import sys
 sys.path.append('vdf-3.4')
 import vdf
@@ -25,7 +27,7 @@ while True:
         usercollections = json.loads(l["UserLocalConfigStore"]["WebStorage"]["user-collections"])
         print(usercollections)
         UIStoreLocalSteamUIState = json.loads(l["UserLocalConfigStore"]["WebStorage"]["UIStoreLocalSteamUIState"])
-        shutil.copy(localconfig, '/home/deck/localconfig.vdf.'+str(user)+'.'+str(ts))
+        #shutil.copy(localconfig, '/home/deck/localconfig.vdf.'+str(user)+'.'+str(ts))
 
         shorctut = '/home/deck/.steam/steam/userdata/'+user+'/config/shortcuts.vdf'
         with open(shorctut, mode='rb') as file: 

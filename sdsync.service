@@ -1,0 +1,7 @@
+[Unit]
+Description=Mount External Drive on %i
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=/home/deck/.local/share/sdsync/sdsync
