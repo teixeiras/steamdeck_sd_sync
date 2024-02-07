@@ -21,8 +21,11 @@ while True:
     for user in files:
         changes = False
         localconfig = '/home/deck/.steam/steam/userdata/'+user+'/config/localconfig.vdf'
-        with open(localconfig, mode='r') as file: 
+       try:
+            with open(localconfig, mode='r') as file:
                 localContent = file.read()
+        except OSError:
+            continue
         l = vdf.loads(localContent, mapper=vdf.VDFDict)
         usercollections = json.loads(l["UserLocalConfigStore"]["WebStorage"]["user-collections"])
         print(usercollections)
