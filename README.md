@@ -9,7 +9,3 @@ No support to shortcuts created by lutris or bottler.
 ```
 wget -O - https://raw.githubusercontent.com/teixeiras/steamdeck_sd_sync/main/install.sh | bash
 ```
-or 
-```
-wget -O - https://shorturl.at/svBTZ | bash
-```
